@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Grind - Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#7C5A46',secondary:'#D4B996'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://readdy.ai/api/search-image?query=A%20cozy%20coffee%20shop%20interior%20with%20warm%20lighting%2C%20wooden%20tables%2C%20comfortable%20seating%2C%20coffee%20brewing%20equipment%20visible%2C%20plants%20scattered%20around%2C%20large%20windows%20letting%20in%20natural%20light%2C%20baristas%20working%20behind%20the%20counter%2C%20a%20few%20customers%20enjoying%20coffee%2C%20a%20warm%20and%20inviting%20atmosphere&width=1920&height=1080&seq=1&orientation=landscape');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .gallery-img {
+            transition: all 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.03);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .custom-checkbox {
+            position: relative;
+            padding-left: 35px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 24px;
+            width: 24px;
+            background-color: #fff;
+            border: 2px solid #7C5A46;
+            border-radius: 4px;
+        }
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #f9f9f9;
+        }
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #7C5A46;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .custom-checkbox .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#home" class="font-['Pacifico'] text-3xl text-primary">The Daily Grind</a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-primary transition-colors duration-300">Home</a>
+                <a href="#menu" class="text-gray-700 hover:text-primary transition-colors duration-300">Menu</a>
+                <a href="#about" class="text-gray-700 hover:text-primary transition-colors duration-300">About Us</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary transition-colors duration-300">Gallery</a>
+                <a href="#hours" class="text-gray-700 hover:text-primary transition-colors duration-300">Hours & Location</a>
+                <a href="#contact" class="text-gray-700 hover:text-primary transition-colors duration-300">Contact</a>
+                <button class="bg-primary text-white px-6 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Order Online</button>
+            </div>
+            
+            <div class="md:hidden w-10 h-10 flex items-center justify-center">
+                <button id="mobile-menu-button" class="text-gray-700">
+                    <i class="ri-menu-line ri-2x"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-gray-700 hover:text-primary transition-colors duration-300">Home</a>
+                <a href="#menu" class="text-gray-700 hover:text-primary transition-colors duration-300">Menu</a>
+                <a href="#about" class="text-gray-700 hover:text-primary transition-colors duration-300">About Us</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary transition-colors duration-300">Gallery</a>
+                <a href="#hours" class="text-gray-700 hover:text-primary transition-colors duration-300">Hours & Location</a>
+                <a href="#contact" class="text-gray-700 hover:text-primary transition-colors duration-300">Contact</a>
+                <button class="bg-primary text-white px-6 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Order Online</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-screen flex items-center justify-center pt-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 font-['Pacifico']">The Daily Grind</h1>
+            <p class="text-xl md:text-2xl text-white mb-10">Where Every Cup Tells a Story</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#menu" class="bg-primary text-white px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300 text-lg">View Menu</a>
+                <a href="#contact" class="bg-white text-primary px-8 py-3 !rounded-button whitespace-nowrap hover:bg-gray-100 transition-colors duration-300 text-lg">Contact Us</a>
+            </div>
+            <div class="mt-16 animate-bounce">
+                <a href="#menu" class="inline-block">
+                    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-20 rounded-full">
+                        <i class="ri-arrow-down-line ri-xl text-white"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Menu</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover our carefully crafted selection of premium coffees, teas, and delicious food items made with locally sourced ingredients.</p>
+                
+                <div class="flex flex-wrap justify-center gap-3 mt-8">
+                    <button class="menu-filter active bg-primary text-white px-4 py-2 !rounded-button whitespace-nowrap" data-filter="all">All</button>
+                    <button class="menu-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="coffee">Coffee</button>
+                    <button class="menu-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="tea">Tea</button>
+                    <button class="menu-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="pastries">Pastries</button>
+                    <button class="menu-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="breakfast">Breakfast</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Coffee Items -->
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="coffee">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Espresso</h3>
+                            <p class="text-gray-600 mt-2">Rich and bold single shot of our signature espresso blend.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$3.50</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">Organic</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Fair Trade</span>
+                    </div>
+                </div>
+                
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="coffee">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Cappuccino</h3>
+                            <p class="text-gray-600 mt-2">Espresso with steamed milk and a thick layer of foam.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$4.75</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">Organic</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Non-dairy option</span>
+                    </div>
+                </div>
+                
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="coffee">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Cold Brew</h3>
+                            <p class="text-gray-600 mt-2">Smooth, low-acid coffee steeped for 18 hours.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$5.25</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Fair Trade</span>
+                    </div>
+                </div>
+                
+                <!-- Tea Items -->
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="tea">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Earl Grey</h3>
+                            <p class="text-gray-600 mt-2">Black tea infused with bergamot oil for a citrusy aroma.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$3.95</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Organic</span>
+                    </div>
+                </div>
+                
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="tea">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Chamomile</h3>
+                            <p class="text-gray-600 mt-2">Soothing herbal tea with notes of apple and honey.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$3.95</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">Organic</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Caffeine-free</span>
+                    </div>
+                </div>
+                
+                <!-- Pastries Items -->
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="pastries">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Almond Croissant</h3>
+                            <p class="text-gray-600 mt-2">Buttery croissant filled with almond cream and topped with sliced almonds.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$4.50</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Contains nuts</span>
+                    </div>
+                </div>
+                
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="pastries">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Blueberry Muffin</h3>
+                            <p class="text-gray-600 mt-2">Moist muffin packed with fresh blueberries and topped with streusel.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$3.95</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Local berries</span>
+                    </div>
+                </div>
+                
+                <!-- Breakfast Items -->
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="breakfast">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Avocado Toast</h3>
+                            <p class="text-gray-600 mt-2">Sourdough toast topped with smashed avocado, cherry tomatoes, and microgreens.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$8.95</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-2">Vegan</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Local produce</span>
+                    </div>
+                </div>
+                
+                <div class="menu-item bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" data-category="breakfast">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Breakfast Burrito</h3>
+                            <p class="text-gray-600 mt-2">Flour tortilla filled with scrambled eggs, black beans, avocado, and cheddar cheese.</p>
+                        </div>
+                        <span class="text-primary font-semibold">$9.50</span>
+                    </div>
+                    <div class="flex items-center mt-4 text-sm">
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Vegetarian</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-primary text-white px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Download Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
+                    <p class="text-gray-600 mb-4">Founded in 2015 by coffee enthusiasts Emily and Michael Chen, The Daily Grind was born from a passion for exceptional coffee and a desire to create a welcoming community space.</p>
+                    <p class="text-gray-600 mb-4">What started as a small kiosk has grown into a beloved neighborhood café, where quality and sustainability are at the heart of everything we do. We source our beans directly from small-scale farmers around the world, ensuring fair prices and exceptional quality.</p>
+                    <p class="text-gray-600 mb-8">Our team of skilled baristas are trained to bring out the unique characteristics of each coffee bean, creating a perfect cup every time. We're not just serving coffee – we're crafting experiences and building community, one cup at a time.</p>
+                    
+                    <div class="flex items-center space-x-6">
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold text-primary">10+</span>
+                            <span class="text-gray-600">Years of Experience</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold text-primary">15</span>
+                            <span class="text-gray-600">Coffee Origins</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold text-primary">5000+</span>
+                            <span class="text-gray-600">Happy Customers</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20cozy%20coffee%20shop%20interior%20with%20warm%20lighting%2C%20wooden%20tables%2C%20comfortable%20seating%2C%20coffee%20brewing%20equipment%20visible%2C%20plants%20scattered%20around%2C%20large%20windows%20letting%20in%20natural%20light%2C%20a%20warm%20and%20inviting%20atmosphere&width=500&height=500&seq=2&orientation=squarish" alt="Coffee shop interior" class="rounded-lg shadow-md object-cover h-64 w-full object-top">
+                    <img src="https://readdy.ai/api/search-image?query=Professional%20barista%20carefully%20preparing%20coffee%2C%20focusing%20on%20the%20brewing%20process%2C%20steam%20rising%20from%20the%20espresso%20machine%2C%20coffee%20beans%20visible%2C%20warm%20lighting%2C%20wooden%20counter%2C%20high-quality%20coffee%20equipment&width=500&height=500&seq=3&orientation=squarish" alt="Barista preparing coffee" class="rounded-lg shadow-md object-cover h-64 w-full object-top">
+                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20freshly%20baked%20pastries%20and%20desserts%20on%20display%20in%20a%20coffee%20shop%2C%20variety%20of%20croissants%2C%20muffins%2C%20and%20cakes%2C%20warm%20lighting%2C%20wooden%20display%20case%2C%20appetizing%20presentation&width=500&height=500&seq=4&orientation=squarish" alt="Fresh pastries" class="rounded-lg shadow-md object-cover h-64 w-full object-top">
+                    <img src="https://readdy.ai/api/search-image?query=People%20enjoying%20coffee%20in%20a%20coffee%20shop%2C%20friends%20chatting%20at%20a%20table%2C%20laptop%20workers%2C%20warm%20lighting%2C%20plants%2C%20comfortable%20seating%2C%20coffee%20cups%20on%20tables%2C%20relaxed%20atmosphere&width=500&height=500&seq=5&orientation=squarish" alt="Customers enjoying coffee" class="rounded-lg shadow-md object-cover h-64 w-full object-top">
+                </div>
+            </div>
+            
+            <div class="mt-20">
+                <h3 class="text-3xl font-bold text-gray-800 mb-10 text-center">Meet Our Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20female%20coffee%20shop%20owner%20in%20her%2030s%2C%20warm%20smile%2C%20casual%20professional%20attire%2C%20neutral%20background%2C%20well-lit%2C%20friendly%20expression&width=300&height=300&seq=6&orientation=squarish" alt="Emily Chen" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
+                        <h4 class="text-xl font-semibold text-gray-800">Emily Chen</h4>
+                        <p class="text-primary">Co-Founder & Head Roaster</p>
+                        <p class="text-gray-600 mt-2">Coffee enthusiast with over 15 years of experience in specialty coffee.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20male%20coffee%20shop%20owner%20in%20his%2030s%2C%20warm%20smile%2C%20casual%20professional%20attire%2C%20neutral%20background%2C%20well-lit%2C%20friendly%20expression&width=300&height=300&seq=7&orientation=squarish" alt="Michael Chen" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
+                        <h4 class="text-xl font-semibold text-gray-800">Michael Chen</h4>
+                        <p class="text-primary">Co-Founder & Operations</p>
+                        <p class="text-gray-600 mt-2">Business strategist with a passion for creating community spaces.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20female%20head%20barista%20in%20her%2020s%2C%20warm%20smile%2C%20barista%20uniform%20or%20casual%20professional%20attire%2C%20neutral%20background%2C%20well-lit%2C%20friendly%20expression&width=300&height=300&seq=8&orientation=squarish" alt="Sophia Rodriguez" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
+                        <h4 class="text-xl font-semibold text-gray-800">Sophia Rodriguez</h4>
+                        <p class="text-primary">Head Barista</p>
+                        <p class="text-gray-600 mt-2">Award-winning barista with a keen eye for latte art perfection.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20male%20pastry%20chef%20in%20his%2030s%2C%20warm%20smile%2C%20chef%20uniform%20or%20casual%20professional%20attire%2C%20neutral%20background%2C%20well-lit%2C%20friendly%20expression&width=300&height=300&seq=9&orientation=squarish" alt="Daniel Park" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
+                        <h4 class="text-xl font-semibold text-gray-800">Daniel Park</h4>
+                        <p class="text-primary">Pastry Chef</p>
+                        <p class="text-gray-600 mt-2">Culinary school graduate specializing in artisanal pastries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Gallery</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Take a visual tour of our space, our creations, and the moments that make The Daily Grind special.</p>
+                
+                <div class="flex flex-wrap justify-center gap-3 mt-8">
+                    <button class="gallery-filter active bg-primary text-white px-4 py-2 !rounded-button whitespace-nowrap" data-filter="all">All</button>
+                    <button class="gallery-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="drinks">Drinks</button>
+                    <button class="gallery-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="food">Food</button>
+                    <button class="gallery-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="interior">Interior</button>
+                    <button class="gallery-filter bg-white border border-primary text-primary px-4 py-2 !rounded-button whitespace-nowrap" data-filter="events">Events</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="drinks">
+                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20a%20beautifully%20crafted%20latte%20art%20on%20a%20cappuccino%2C%20foam%20creating%20an%20intricate%20leaf%20or%20heart%20pattern%2C%20served%20in%20a%20white%20ceramic%20cup%20on%20a%20wooden%20table%2C%20soft%20natural%20lighting&width=600&height=400&seq=10&orientation=landscape" alt="Latte Art" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="food">
+                    <img src="https://readdy.ai/api/search-image?query=Artisanal%20breakfast%20plate%20with%20avocado%20toast%2C%20eggs%2C%20and%20fresh%20fruit%2C%20beautifully%20arranged%20on%20a%20ceramic%20plate%2C%20bright%20natural%20lighting%2C%20wooden%20table%20surface%2C%20fresh%20herbs%20as%20garnish&width=600&height=400&seq=11&orientation=landscape" alt="Breakfast Plate" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="interior">
+                    <img src="https://readdy.ai/api/search-image?query=Cozy%20coffee%20shop%20seating%20area%20with%20comfortable%20chairs%2C%20wooden%20tables%2C%20bookshelves%2C%20plants%2C%20warm%20lighting%2C%20large%20windows%20letting%20in%20natural%20light%2C%20inviting%20atmosphere&width=600&height=400&seq=12&orientation=landscape" alt="Seating Area" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="drinks">
+                    <img src="https://readdy.ai/api/search-image?query=Cold%20brew%20coffee%20being%20poured%20over%20ice%20in%20a%20clear%20glass%2C%20condensation%20on%20the%20glass%2C%20wooden%20counter%2C%20soft%20natural%20lighting%2C%20coffee%20beans%20scattered%20nearby&width=600&height=400&seq=13&orientation=landscape" alt="Cold Brew" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="events">
+                    <img src="https://readdy.ai/api/search-image?query=Coffee%20tasting%20event%20in%20a%20coffee%20shop%2C%20people%20gathered%20around%20a%20table%20sampling%20different%20coffees%2C%20barista%20explaining%20brewing%20methods%2C%20warm%20lighting%2C%20engaged%20participants&width=600&height=400&seq=14&orientation=landscape" alt="Coffee Tasting Event" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="food">
+                    <img src="https://readdy.ai/api/search-image?query=Freshly%20baked%20pastries%20displayed%20in%20a%20coffee%20shop%2C%20variety%20of%20croissants%2C%20muffins%2C%20and%20scones%2C%20wooden%20display%20case%2C%20warm%20lighting%2C%20appetizing%20presentation&width=600&height=400&seq=15&orientation=landscape" alt="Pastry Display" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="interior">
+                    <img src="https://readdy.ai/api/search-image?query=Coffee%20shop%20counter%20with%20espresso%20machine%2C%20baristas%20working%2C%20coffee%20beans%20in%20containers%2C%20menu%20board%2C%20warm%20lighting%2C%20wooden%20elements%2C%20busy%20atmosphere&width=600&height=400&seq=16&orientation=landscape" alt="Coffee Counter" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="events">
+                    <img src="https://readdy.ai/api/search-image?query=Live%20acoustic%20music%20performance%20in%20a%20coffee%20shop%2C%20musician%20with%20guitar%2C%20small%20audience%20enjoying%20coffee%2C%20warm%20intimate%20lighting%2C%20cozy%20atmosphere&width=600&height=400&seq=17&orientation=landscape" alt="Live Music" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md" data-category="drinks">
+                    <img src="https://readdy.ai/api/search-image?query=Barista%20carefully%20preparing%20pour-over%20coffee%2C%20focusing%20on%20the%20brewing%20process%2C%20steam%20rising%2C%20coffee%20dripping%20into%20glass%20carafe%2C%20wooden%20counter%2C%20high-quality%20coffee%20equipment&width=600&height=400&seq=18&orientation=landscape" alt="Pour Over Coffee" class="gallery-img w-full h-64 object-cover object-top">
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-primary text-white px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">View More on Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours & Location Section -->
+    <section id="hours" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Hours & Location</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Find us in the heart of downtown. We're open 7 days a week to serve your coffee needs.</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Opening Hours</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Monday - Friday</span>
+                                <span class="text-primary font-semibold">7:00 AM - 8:00 PM</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Saturday</span>
+                                <span class="text-primary font-semibold">8:00 AM - 6:00 PM</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Sunday</span>
+                                <span class="text-primary font-semibold">8:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Contact Information</h4>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 flex items-center justify-center text-primary">
+                                        <i class="ri-map-pin-line ri-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-gray-700">123 Coffee Street, Downtown</p>
+                                        <p class="text-gray-700">New York, NY 10001</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 flex items-center justify-center text-primary">
+                                        <i class="ri-phone-line ri-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-gray-700">(212) 555-1234</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 flex items-center justify-center text-primary">
+                                        <i class="ri-mail-line ri-lg"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-gray-700">hello@thedailygrind.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-4">Parking Information</h4>
+                            <p class="text-gray-600">Street parking is available, and there's a public parking garage one block away on Main Street.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 h-96 rounded-lg overflow-hidden shadow-md">
+                    <div class="w-full h-full" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Have questions, feedback, or want to book an event? We'd love to hear from you!</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <form class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="john@example.com">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Event Booking, Feedback, etc.">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your message here..."></textarea>
+                        </div>
+                        
+                        <label class="custom-checkbox mb-6 block">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            <span class="ml-2 text-gray-700">Subscribe to our newsletter for updates and special offers</span>
+                        </label>
+                        
+                        <button type="submit" class="w-full bg-primary text-white px-6 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-8 rounded-lg shadow-md h-full">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Connect With Us</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xl font-medium text-gray-800 mb-3">Follow Us</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-primary hover:bg-primary hover:text-white transition-colors duration-300">
+                                        <i class="ri-instagram-line ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-primary hover:bg-primary hover:text-white transition-colors duration-300">
+                                        <i class="ri-facebook-fill ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-primary hover:bg-primary hover:text-white transition-colors duration-300">
+                                        <i class="ri-twitter-x-line ri-lg"></i>
+                                    </a>
+                                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full text-primary hover:bg-primary hover:text-white transition-colors duration-300">
+                                        <i class="ri-yelp-line ri-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-medium text-gray-800 mb-3">Book an Event</h4>
+                                <p class="text-gray-600 mb-4">We offer our space for private events, workshops, and meetings. Contact us for availability and pricing.</p>
+                                <a href="#" class="text-primary font-medium hover:underline">Learn more about our event spaces</a>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-medium text-gray-800 mb-3">Join Our Team</h4>
+                                <p class="text-gray-600 mb-4">Passionate about coffee? We're always looking for talented individuals to join our team.</p>
+                                <a href="#" class="text-primary font-medium hover:underline">View current openings</a>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-medium text-gray-800 mb-3">Newsletter</h4>
+                                <p class="text-gray-600 mb-4">Subscribe to receive updates on new menu items, events, and special offers.</p>
+                                <div class="flex">
+                                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <button class="bg-primary text-white px-6 py-3 !rounded-r-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Subscribe</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <a href="#home" class="font-['Pacifico'] text-3xl text-white mb-6 inline-block">The Daily Grind</a>
+                    <p class="text-gray-400 mb-6">Where every cup tells a story. Serving quality coffee and creating community since 2015.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-instagram-line ri-lg"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-facebook-fill ri-lg"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-twitter-x-line ri-lg"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-yelp-line ri-lg"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                        <li><a href="#menu" class="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition-colors duration-300">Gallery</a></li>
+                        <li><a href="#hours" class="text-gray-400 hover:text-white transition-colors duration-300">Hours & Location</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 flex items-center justify-center text-gray-400 mr-3">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-gray-400">123 Coffee Street, Downtown<br>New York, NY 10001</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 flex items-center justify-center text-gray-400 mr-3">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="text-gray-400">(212) 555-1234</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 flex items-center justify-center text-gray-400 mr-3">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span class="text-gray-400">hello@thedailygrind.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates and special offers.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 bg-gray-800 border border-gray-700 rounded-l text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button type="submit" class="bg-primary text-white px-4 py-2 !rounded-r-button whitespace-nowrap hover:bg-opacity-90 transition-colors duration-300">Subscribe</button>
+                        </div>
+                    </form>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-400">We accept:</span>
+                        <div class="flex space-x-2">
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                <i class="ri-visa-line ri-lg"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                <i class="ri-mastercard-line ri-lg"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                <i class="ri-paypal-line ri-lg"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                <i class="ri-apple-fill ri-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 The Daily Grind. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+
+    <!-- Smooth Scroll Script -->
+    <script id="smooth-scroll-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for header height
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Menu Filter Script -->
+    <script id="menu-filter-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuFilters = document.querySelectorAll('.menu-filter');
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Remove active class from all filters
+                    menuFilters.forEach(f => {
+                        f.classList.remove('active', 'bg-primary', 'text-white');
+                        f.classList.add('bg-white', 'border', 'border-primary', 'text-primary');
+                    });
+                    
+                    // Add active class to clicked filter
+                    this.classList.add('active', 'bg-primary', 'text-white');
+                    this.classList.remove('bg-white', 'border', 'border-primary', 'text-primary');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide menu items based on filter
+                    menuItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!-- Gallery Filter Script -->
+    <script id="gallery-filter-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryFilters = document.querySelectorAll('.gallery-filter');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            galleryFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Remove active class from all filters
+                    galleryFilters.forEach(f => {
+                        f.classList.remove('active', 'bg-primary', 'text-white');
+                        f.classList.add('bg-white', 'border', 'border-primary', 'text-primary');
+                    });
+                    
+                    // Add active class to clicked filter
+                    this.classList.add('active', 'bg-primary', 'text-white');
+                    this.classList.remove('bg-white', 'border', 'border-primary', 'text-primary');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
