@@ -57,7 +57,7 @@ To deploy this project via GitHub Pages:
 ---
 
 ## 📄 License
-This project is open source under the **MIT License**
+This project is open source under the [MIT License](LICENSE)
 
 ---
 
